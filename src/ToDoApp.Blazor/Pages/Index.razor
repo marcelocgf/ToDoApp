@@ -1,0 +1,37 @@
+﻿@page "/"
+@using Volo.Abp.MultiTenancy
+@inherits ToDoAppComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<div class="container">
+    <Card>
+        <CardHeader>
+            <CardTitle>
+                TODO LIST
+            </CardTitle>
+        </CardHeader>
+        <CardBody>
+            <!-- FORM FOR NEW TODO ITEMS -->
+            <form id="NewItemForm" @onsubmit:preventDefault @onsubmit="() => Create()" class="row row-cols-lg-auto g-3 align-items-center">
+                <div class="col-12">
+                  <div class="input-group">
+                    <input name="NewToDoText" type="text" @bind-value="@NewToDoText" class="form-control" placeholder="enter text..." />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+            <!-- TODO ITEMS LIST -->
+            <ul id="ToDoList">
+                @foreach (var toDoItem in ToDoItems)
+                {
+                    <li data-id="@toDoItem.Id">
+                        <i class="far fa-trash-alt"
+                           @onclick="() => Delete(toDoItem)"></i> @toDoItem.Text
+                    </li>
+                }
+            </ul>
+        </CardBody>
+    </Card>
+</div>
